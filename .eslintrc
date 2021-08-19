@@ -28,6 +28,13 @@
         "mocha/max-top-level-suites": "off",
         "mocha/no-setup-in-describe": "off"
       }
+    },
+    // TODO: unbind @typescript-eslint/parser
+    {
+      "files": ["bin/**/*.js"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
     }
   ],
   "parserOptions": {
