@@ -1,13 +1,13 @@
 const fs = require('fs')
 const path = require('path')
 const abi = require('../lib/abi')
-const { error } = require('./color')
+const { error, success } = require('./color')
 
 const argvConfig = yargs =>
   yargs
-    .option('path', {
-      alias: 'p',
-      describe: 'provide a ABI JSON file path',
+    .option('file', {
+      alias: 'f',
+      describe: 'provide a ABI JSON file',
       type: 'string'
     })
     .option('run', {
@@ -20,12 +20,12 @@ const argvConfig = yargs =>
       type: 'string'
     })
     .demandOption(
-      ['path', 'run'],
-      'Please provide both run and path arguments to work with ABI tool'
+      ['file', 'run'],
+      'Please provide both run and file arguments to work with ABI tool'
     ).argv
 
 const run = argv => {
-  const file = path.join(process.cwd(), argv.path)
+  const file = path.join(process.cwd(), argv.file)
   if (!fs.existsSync(file)) {
     console.log(error(`ABI Error: ABI JSON file "${file}" isn't exist`))
     process.exit(1)
@@ -43,6 +43,7 @@ const run = argv => {
     result = func(ABI)
   }
 
+  console.log(success('Result:'))
   console.log(JSON.stringify(result, null, 2))
 }
 
