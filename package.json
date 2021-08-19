@@ -1,0 +1,56 @@
+{
+  "name": "sc-toolkit",
+  "version": "0.0.1",
+  "description": "Smart Contract development and debugging toolkit",
+  "main": "lib/index.js",
+  "bin": {
+    "sc-toolkit": "./bin/index.js"
+  },
+  "scripts": {
+    "lint": "eslint src/** test/** bin/**",
+    "test": "ts-mocha --paths -p ./tsconfig.json test/**/*.spec.ts",
+    "prettier": "prettier --write ."
+  },
+  "pre-commit": [
+    "lint",
+    "prettier"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jinyang1994/sc-toolkit.git"
+  },
+  "keywords": [
+    "smart-contract",
+    "toolkit",
+    "libs",
+    "cli",
+    "development",
+    "debugging"
+  ],
+  "author": "liujinyang@bigtiger.me",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jinyang1994/sc-toolkit/issues"
+  },
+  "homepage": "https://github.com/jinyang1994/sc-toolkit#readme",
+  "dependencies": {
+    "typescript": "^4.3.5"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.21",
+    "@types/mocha": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.29.2",
+    "@typescript-eslint/parser": "^4.29.2",
+    "chai": "^4.3.4",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.24.0",
+    "eslint-plugin-mocha": "^9.0.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "^2.3.2",
+    "ts-mocha": "^8.0.0"
+  }
+}
