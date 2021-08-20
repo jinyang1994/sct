@@ -1,4 +1,4 @@
-import { Interface, JsonFragment } from '@ethersproject/abi'
+import { Interface, JsonFragment, FunctionFragment } from '@ethersproject/abi'
 
 export class NotExistFuncSelectorError extends Error {
   constructor(functionSelector: string) {
@@ -8,8 +8,32 @@ export class NotExistFuncSelectorError extends Error {
   }
 }
 
+export const getFunction = (
+  abi: ReadonlyArray<JsonFragment>,
+  functionSelector: string
+): FunctionFragment => {
+  const iface = new Interface(abi)
+  let func
+  try {
+    func = iface.getFunction(functionSelector)
+  } catch {
+    throw new NotExistFuncSelectorError(functionSelector)
+  }
+
+  return func
+}
+
+export const getFunctionName = (
+  abi: ReadonlyArray<JsonFragment>,
+  functionSelector: string
+): string => {
+  const func = getFunction(abi, functionSelector)
+
+  return func.name
+}
+
 export const decodeFunctionData = (
-  abi: Array<JsonFragment>,
+  abi: ReadonlyArray<JsonFragment>,
   inputData: string
 ): {
   name: string
@@ -21,12 +45,7 @@ export const decodeFunctionData = (
 } => {
   const iface = new Interface(abi)
   const functionSelector = inputData.slice(0, 10)
-  let func
-  try {
-    func = iface.getFunction(functionSelector)
-  } catch {
-    throw new NotExistFuncSelectorError(functionSelector)
-  }
+  const func = getFunction(abi, functionSelector)
   const params = iface.decodeFunctionData(func.name, inputData)
 
   return {

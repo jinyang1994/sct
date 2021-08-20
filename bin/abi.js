@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const abi = require('../lib/abi')
-const { error, success } = require('./color')
+const { error, success, json } = require('./color')
 
 const argvConfig = yargs =>
   yargs
@@ -16,7 +16,7 @@ const argvConfig = yargs =>
       type: 'string'
     })
     .option('data', {
-      describe: 'provide a tx data for function',
+      describe: 'provide a data for function',
       type: 'string'
     })
     .demandOption(
@@ -36,15 +36,14 @@ const run = argv => {
     process.exit(1)
   }
   const ABI = JSON.parse(fs.readFileSync(file))
-  let result
-  if (argv.run === 'decodeFunctionData') {
-    result = abi.decodeFunctionData(ABI, argv.data)
-  } else {
-    result = func(ABI)
-  }
+  try {
+    const result = abi[argv.run](ABI, argv.data)
 
-  console.log(success('Result:'))
-  console.log(JSON.stringify(result, null, 2))
+    console.log(success(`ABI function "${argv.run}" output:`))
+    console.log(typeof result === 'object' ? json(result) : result)
+  } catch (err) {
+    console.log(error(err.message))
+  }
 }
 
 module.exports = ['abi', 'Smart Contract ABI interface', argvConfig, run]
