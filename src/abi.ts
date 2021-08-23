@@ -3,33 +3,25 @@ import { Interface, JsonFragment, FunctionFragment } from '@ethersproject/abi'
 export class NotExistFuncSelectorError extends Error {
   constructor(functionSelector: string) {
     super(
-      `[abi/decodeFunctionData]: the function "${functionSelector}" isn't exist`
+      `[ABI/decodeFunctionData]: the function "${functionSelector}" isn't exist`
     )
   }
 }
 
 export const getFunction = (
   abi: ReadonlyArray<JsonFragment>,
-  functionSelector: string
+  inputData: string
 ): FunctionFragment => {
   const iface = new Interface(abi)
-  let func
+  const functionSelector = inputData.startsWith('0x')
+    ? inputData.slice(0, 10)
+    : inputData
+
   try {
-    func = iface.getFunction(functionSelector)
+    return iface.getFunction(functionSelector)
   } catch {
     throw new NotExistFuncSelectorError(functionSelector)
   }
-
-  return func
-}
-
-export const getFunctionName = (
-  abi: ReadonlyArray<JsonFragment>,
-  functionSelector: string
-): string => {
-  const func = getFunction(abi, functionSelector)
-
-  return func.name
 }
 
 export const decodeFunctionData = (
@@ -44,8 +36,7 @@ export const decodeFunctionData = (
   }>
 } => {
   const iface = new Interface(abi)
-  const functionSelector = inputData.slice(0, 10)
-  const func = getFunction(abi, functionSelector)
+  const func = getFunction(abi, inputData)
   const params = iface.decodeFunctionData(func.name, inputData)
 
   return {
