@@ -1,7 +1,8 @@
-const fs = require('fs')
-const path = require('path')
+const inquirer = require('inquirer')
 const abi = require('../lib/abi')
-const { error, success, json } = require('./color')
+const { colors, readJsonFile } = require('./utils')
+
+const funcs = [abi.getFunction, abi.decodeFunctionData]
 
 const argvConfig = yargs =>
   yargs
@@ -15,34 +16,42 @@ const argvConfig = yargs =>
       describe: 'run ABI function',
       type: 'string'
     })
-    .option('data', {
-      describe: 'provide a data for function',
-      type: 'string'
-    })
     .demandOption(
-      ['file', 'run'],
-      'Please provide both run and file arguments to work with ABI tool'
+      ['file'],
+      'Please provide file arguments to work with ABI tool'
     ).argv
 
-const run = argv => {
-  const file = path.join(process.cwd(), argv.file)
-  if (!fs.existsSync(file)) {
-    console.log(error(`ABI Error: ABI JSON file "${file}" isn't exist`))
-    process.exit(1)
-  }
-  const func = abi[argv.run]
-  if (!func) {
-    console.log(error(`ABI Error: function "${argv.run}" isn't exist`))
-    process.exit(1)
-  }
-  const ABI = JSON.parse(fs.readFileSync(file))
+const run = async argv => {
   try {
-    const result = abi[argv.run](ABI, argv.data)
+    const ABI = readJsonFile(argv.file)
+    const { func } = await inquirer.prompt(
+      {
+        type: 'list',
+        name: 'func',
+        message: 'What do you want to run?',
+        choices: funcs
+      },
+      { func: funcs.map(f => f.name).includes(argv.run) ? argv.run : undefined }
+    )
+    let result
 
-    console.log(success(`ABI function "${argv.run}" output:`))
-    console.log(typeof result === 'object' ? json(result) : result)
+    // processing specify function
+    switch (func) {
+      default:
+        const { data } = await inquirer.prompt({
+          type: 'input',
+          name: 'data',
+          message: 'Provide a data for function'
+        })
+        result = abi[func](ABI, data)
+    }
+
+    console.log(colors.success(`ABI function "${func}" output:`))
+    console.log(typeof result === 'object' ? colors.json(result) : result)
+    process.exit(0)
   } catch (err) {
-    console.log(error(err.message))
+    console.log(colors.error(`[CLI/Error]: ${err.message}`))
+    process.exit(1)
   }
 }
 
