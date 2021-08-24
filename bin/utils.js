@@ -16,6 +16,6 @@ exports.readJsonFile = input => {
 
     return JSON.parse(fs.readFileSync(file))
   } catch {
-    throw new Error(`File "${input}" parsing failed`)
+    throw new Error(`[CLI/readJsonFile]: file "${input}" parsing failed`)
   }
 }

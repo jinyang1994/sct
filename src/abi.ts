@@ -1,10 +1,8 @@
 import { Interface, JsonFragment, FunctionFragment } from '@ethersproject/abi'
 
-export class NotExistFuncSelectorError extends Error {
-  constructor(functionSelector: string) {
-    super(
-      `[ABI/decodeFunctionData]: the function "${functionSelector}" isn't exist`
-    )
+export class NotExistFuncError extends Error {
+  constructor(func: string) {
+    super(`[ABI/NotExistFuncError]: the function "${func}" isn't exist`)
   }
 }
 
@@ -20,7 +18,7 @@ export const getFunction = (
   try {
     return iface.getFunction(functionSelector)
   } catch {
-    throw new NotExistFuncSelectorError(functionSelector)
+    throw new NotExistFuncError(functionSelector)
   }
 }
 

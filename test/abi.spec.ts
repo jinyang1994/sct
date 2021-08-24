@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { decodeFunctionData, NotExistFuncSelectorError } from '../src/abi'
+import { decodeFunctionData, NotExistFuncError } from '../src/abi'
 import TEST_ABI from './assets/abi.json'
 
 /* eslint-disable max-len */
@@ -20,7 +20,7 @@ describe('ABI toolkit', function () {
     try {
       decodeFunctionData(TEST_ABI, inputData)
     } catch (error) {
-      expect(error).to.be.instanceOf(NotExistFuncSelectorError)
+      expect(error).to.be.instanceOf(NotExistFuncError)
     }
   })
 })

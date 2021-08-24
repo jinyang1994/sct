@@ -2,7 +2,7 @@ const inquirer = require('inquirer')
 const abi = require('../lib/abi')
 const { colors, readJsonFile } = require('./utils')
 
-const funcs = [abi.getFunction, abi.decodeFunctionData]
+const funcs = [abi.getFunction.name, abi.decodeFunctionData.name]
 
 const argvConfig = yargs =>
   yargs
@@ -14,6 +14,7 @@ const argvConfig = yargs =>
     .option('run', {
       alias: 'r',
       describe: 'run ABI function',
+      choices: funcs,
       type: 'string'
     })
     .demandOption(
@@ -31,7 +32,7 @@ const run = async argv => {
         message: 'What do you want to run?',
         choices: funcs
       },
-      { func: funcs.map(f => f.name).includes(argv.run) ? argv.run : undefined }
+      { func: argv.run || undefined }
     )
     let result
 
@@ -50,7 +51,7 @@ const run = async argv => {
     console.log(typeof result === 'object' ? colors.json(result) : result)
     process.exit(0)
   } catch (err) {
-    console.log(colors.error(`[CLI/Error]: ${err.message}`))
+    console.log(colors.error(`${err.message}`))
     process.exit(1)
   }
 }
