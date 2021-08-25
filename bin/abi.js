@@ -44,6 +44,7 @@ const run = async argv => {
           name: 'data',
           message: 'Provide a data for function'
         })
+
         result = abi[func](ABI, data)
     }
 

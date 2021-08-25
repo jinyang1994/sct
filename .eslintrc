@@ -24,6 +24,7 @@
       },
       "rules": {
         "prefer-arrow-callback": "off",
+        "no-unused-expressions": "off",
         "func-names": "off",
         "mocha/max-top-level-suites": "off",
         "mocha/no-setup-in-describe": "off"
