@@ -71,7 +71,7 @@ The full documentation is a available in [here](./docs.md).
 $ sct convert
 
 ? What do you want to run? stringToBytes
-? Provide a data for function Welcome to use sct
+? inputData: Welcome to use sct
 ? Do you need extra args? No
 Convert function "stringToBytes" output:
 0x57656c636f6d6520746f2075736520736374
@@ -82,7 +82,7 @@ Or, run specify function
 ```
 $ sct convert -r stringToBytes
 
-? Provide a data for function Welcome to use sct
+? inputData: Welcome to use sct
 ? Do you need extra args? No
 Convert function "stringToBytes" output:
 0x57656c636f6d6520746f2075736520736374

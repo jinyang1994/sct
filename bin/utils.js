@@ -42,7 +42,7 @@ exports.generateCommand = (moduleName, message, addYargsConfig, funcs) => [
         {
           type: 'list',
           name: 'funcName',
-          message: 'run function:',
+          message: 'What do you want to run?',
           choices: Object.keys(funcs)
         },
         { func: argv.run || undefined }
@@ -74,7 +74,7 @@ exports.generateCommand = (moduleName, message, addYargsConfig, funcs) => [
           },
           ...optional.map(({ name, ...others }) => ({
             name,
-            message: name,
+            message: `${name}:`,
             when: ({ extra }) => extra,
             ...others
           }))
