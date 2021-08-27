@@ -43,6 +43,28 @@ $ yarn add sct
 
 ## 🔨 Usage
 
+### 📦 Using library
+
+```javascript
+import { convert } from 'sct'
+// es5
+// const { convert } = require('sct')
+
+convert.stringToBytes('Welcome to use sct') // 0x57656c636f6d6520746f2075736520736374
+```
+
+Or, import on demand
+
+```javascript
+import { stringToBytes } from 'sct/lib/convert'
+// es5
+// const { stringToBytes } = require('sct/lib/convert')
+
+stringToBytes('Welcome to use sct') // 0x57656c636f6d6520746f2075736520736374
+```
+
+The full documentation is a available in [here](./docs.md).
+
 ### ⚙️ Using CLI
 
 ```
@@ -67,30 +89,6 @@ Convert function "stringToBytes" output:
 ```
 
 See more, please you use `sct -h`
-
-### 📦 Using library
-
-```javascript
-import { convert } from 'sct'
-// es5
-// const { convert } = require('sct')
-
-convert.stringToBytes('Welcome to use sct') // 0x57656c636f6d6520746f2075736520736374
-```
-
-Or, import on demand
-
-```javascript
-import { stringToBytes } from 'sct/lib/convert'
-// es5
-// const { stringToBytes } = require('sct/lib/convert')
-
-stringToBytes('Welcome to use sct') // 0x57656c636f6d6520746f2075736520736374
-```
-
-## 📖 Documentation
-
-The full documentation is a available in [here](./docs.md).
 
 ## ✂️ Development
 

@@ -38,6 +38,7 @@
   "homepage": "https://github.com/jinyang1994/sc-toolkit#readme",
   "dependencies": {
     "@ethersproject/abi": "^5.4.0",
+    "@ethersproject/bignumber": "^5.4.1",
     "@ethersproject/strings": "^5.4.0",
     "chalk": "^4.1.2",
     "color-json": "^2.0.1",

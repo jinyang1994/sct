@@ -1,5 +1,10 @@
 import { expect } from 'chai'
-import { bytesToString, stringToBytes } from '../src/convert'
+import {
+  bytesToString,
+  stringToBytes,
+  numberToHex,
+  hexToNumber
+} from '../src/convert'
 
 describe('Convert toolkit', function () {
   it('Convert between bytes and string', function () {
@@ -36,5 +41,13 @@ describe('Convert toolkit', function () {
     expect(bytes.startsWith('0x')).to.be.true
     expect(bytes.length).to.be.equal(2 + str.length * 2)
     expect(result).to.be.equal(context)
+  })
+
+  it('Convert between number and hex', function () {
+    const number = '876394737274857238465748364'
+    const hex = numberToHex(number)
+    const result = hexToNumber(hex)
+
+    expect(result).to.be.equal(number)
   })
 })

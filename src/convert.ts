@@ -1,4 +1,5 @@
 import { toUtf8Bytes, toUtf8String } from '@ethersproject/strings'
+import { BigNumber } from '@ethersproject/bignumber'
 
 export const bytesToString = (
   bytes: string,
@@ -23,3 +24,9 @@ export const stringToBytes = (
     .join('')
     .replace(/^/, '0x') // add prefix 0x
 }
+
+export const numberToHex = (num: string | number): string =>
+  BigNumber.from(num).toHexString()
+
+export const hexToNumber = (hex: string | number): string =>
+  BigNumber.from(hex).toString()

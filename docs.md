@@ -29,7 +29,7 @@ abi.decodeFunctionData(ABI, txData)
 #### bytesToString
 
 ```javascript
-abi.bytesToString(bytes [, start [, length]])
+convert.bytesToString(bytes [, start [, length]])
 ```
 
 | Property | Description                         | Type   | Default                  |
@@ -41,7 +41,7 @@ abi.bytesToString(bytes [, start [, length]])
 #### stringToBytes
 
 ```javascript
-abi.stringToBytes(str [, start [, length]])
+convert.stringToBytes(str [, start [, length]])
 ```
 
 | Property | Description                       | Type   | Default            |
@@ -49,3 +49,23 @@ abi.stringToBytes(str [, start [, length]])
 | str      | text string                       | string | -                  |
 | start    | where to start to convert the str | number | 0                  |
 | length   | converted length                  | number | str.length - start |
+
+#### numberToHex
+
+```javascript
+convert.numberToHex(num)
+```
+
+| Property | Description              | Type             | Default |
+| -------- | ------------------------ | ---------------- | ------- |
+| num      | decimal number or string | string \| number | -       |
+
+#### hexToNumber
+
+```javascript
+convert.hexToNumber(hex)
+```
+
+| Property | Description                  | Type             | Default |
+| -------- | ---------------------------- | ---------------- | ------- |
+| hex      | hexadecimal number or string | string \| number | -       |

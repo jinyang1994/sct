@@ -1,4 +1,9 @@
-const { stringToBytes, bytesToString } = require('../lib/convert')
+const {
+  stringToBytes,
+  bytesToString,
+  numberToHex,
+  hexToNumber
+} = require('../lib/convert')
 const { generateCommand } = require('./utils')
 
 module.exports = generateCommand(
@@ -45,6 +50,26 @@ module.exports = generateCommand(
         }
       ],
       handler: ({ bytes, start, length }) => bytesToString(bytes, start, length)
+    },
+    numberToHex: {
+      options: [
+        {
+          type: 'input',
+          name: 'num',
+          required: true
+        }
+      ],
+      handler: ({ num }) => numberToHex(num)
+    },
+    hexToNumber: {
+      options: [
+        {
+          type: 'input',
+          name: 'hex',
+          required: true
+        }
+      ],
+      handler: ({ hex }) => hexToNumber(hex)
     }
   }
 )
