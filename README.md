@@ -4,7 +4,9 @@
 
 Help you better learn, develop and debug Smart Contract.
 
-[![NPM version][npm-image]][npm-url] [![NPM downloads][download-image]][download-url] [![david deps][david-image]][david-url] [![david devDeps][david-dev-image]][david-dev-url] [![License][license-image]][license-url]
+[![NPM version][npm-image]][npm-url] [![NPM downloads][download-image]][download-url] [![License][license-image]][license-url]
+
+[![Build][build-image]][build-url] [![Coverage][coverage-image]][coverage-url] [![david deps][david-image]][david-url] [![david devDeps][david-dev-image]][david-dev-url]
 
 [npm-image]: https://img.shields.io/npm/v/sct?style=flat-square
 [npm-url]: http://npmjs.org/package/sct
@@ -16,6 +18,10 @@ Help you better learn, develop and debug Smart Contract.
 [david-dev-url]: https://david-dm.org/jinyang1994/sct?type=dev
 [license-image]: https://img.shields.io/npm/l/sct?style=flat-square
 [license-url]: https://en.wikipedia.org/wiki/MIT_License
+[build-image]: https://img.shields.io/travis/com/jinyang1994/sct?style=flat-square
+[build-url]: https://app.travis-ci.com/github/jinyang1994/sct
+[coverage-image]: https://img.shields.io/coveralls/github/jinyang1994/sct?style=flat-square
+[coverage-url]: https://coveralls.io/github/jinyang1994/sct
 
 </div>
 
