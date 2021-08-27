@@ -1,60 +1,49 @@
-const inquirer = require('inquirer')
-const abi = require('../lib/abi')
-const { colors, readJsonFile } = require('./utils')
+const { getFunction, decodeFunctionData } = require('../lib/abi')
+const { colors, readJsonFile, generateCommand } = require('./utils')
 
-const funcs = [abi.getFunction.name, abi.decodeFunctionData.name]
-
-const argvConfig = yargs =>
-  yargs
-    .option('file', {
-      alias: 'f',
-      describe: 'provide a ABI JSON file',
-      type: 'string'
-    })
-    .option('run', {
-      alias: 'r',
-      describe: 'run ABI function',
-      choices: funcs,
-      type: 'string'
-    })
-    .demandOption(
-      ['file'],
-      'Please provide file arguments to work with ABI tool'
-    ).argv
-
-const run = async argv => {
-  try {
-    const ABI = readJsonFile(argv.file)
-    const { func } = await inquirer.prompt(
-      {
-        type: 'list',
-        name: 'func',
-        message: 'What do you want to run?',
-        choices: funcs
-      },
-      { func: argv.run || undefined }
-    )
-    let result
-
-    // processing specify function
-    switch (func) {
-      default:
-        const { data } = await inquirer.prompt({
+module.exports = generateCommand(
+  'abi',
+  'Smart Contract ABI interface',
+  yargs =>
+    yargs
+      .option('file', {
+        alias: 'f',
+        describe: 'provide a ABI JSON file',
+        type: 'string'
+      })
+      .demandOption(
+        ['file'],
+        'Please provide file arguments to work with ABI tool'
+      ),
+  {
+    getFunction: {
+      options: [
+        {
           type: 'input',
-          name: 'data',
-          message: 'Provide a data for function'
-        })
+          name: 'inputData',
+          required: true
+        }
+      ],
+      handler: ({ inputData }, { file }) => {
+        const ABI = readJsonFile(file)
 
-        result = abi[func](ABI, data)
+        return getFunction(ABI, inputData)
+      }
+    },
+    decodeFunctionData: {
+      options: [
+        {
+          type: 'input',
+          name: 'inputData',
+          required: true
+        }
+      ],
+      handler: ({ inputData }, { file }) => {
+        const ABI = readJsonFile(file)
+        const result = decodeFunctionData(ABI, inputData)
+
+        return colors.json(result)
+      }
     }
-
-    console.log(colors.success(`ABI function "${func}" output:`))
-    console.log(typeof result === 'object' ? colors.json(result) : result)
-    process.exit(0)
-  } catch (err) {
-    console.log(colors.error(`${err.message}`))
-    process.exit(1)
   }
-}
-
-module.exports = ['abi', 'Smart Contract ABI interface', argvConfig, run]
+)
